@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: "off"*/
+
 import React from 'react'
 import './Header.css'
 import SearchIcon from "@material-ui/icons/Search"

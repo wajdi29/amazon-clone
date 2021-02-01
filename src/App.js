@@ -1,3 +1,5 @@
+/*eslint no-empty-pattern: "off"*/
+
 import './App.css';
 
 import Header from './Header';
@@ -14,6 +16,11 @@ import Login from './Login';
 import React, { useEffect } from 'react'
 import { auth } from './firebase'
 import { useStateValue } from './stateProvider';
+import Payment from './Payment';
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+
+const promise = loadStripe('pk_test_51HuCTXGfyjO9Io5agXWrdKs73hHcPkxaU31a8MkQdBMz7XsWmVkgmtE7ZTXmIieBuDT3JrWQTV1ksHlX7jMaHeZp00VP7x3xFU')
 
 
 function App() {
@@ -52,6 +59,12 @@ function App() {
           </Route>
           <Route path='/login'>
             <Login />
+          </Route>
+          <Route path='/payment'>
+            <Header />
+            <Elements stripe={promise}>
+              <Payment />
+            </Elements>
           </Route>
           <Route path='/'>
             <Header />
