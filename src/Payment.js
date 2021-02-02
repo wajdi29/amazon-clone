@@ -9,6 +9,7 @@ import './Payment.css'
 import { getBasketTotal } from './reducer'
 import { useStateValue } from './stateProvider'
 import axios from './axios'
+import { db } from './firebase'
 
 
 function Payment() {
@@ -37,6 +38,8 @@ function Payment() {
         getClientSecret()
 
     }, [basket])
+
+    console.log('My secret is >>>', clientSecret)
     const handleSubmit = async (event) => {
         event.preventDefault()
         setProcessing(true)
@@ -46,9 +49,22 @@ function Payment() {
                 card: elements.getElement(CardElement)
             }
         }).then(({ paymentIntent }) => {
+            db
+            .collection('users')
+            .doc(user?.uid)
+            .collection('orders')
+            .doc(paymentIntent.id)
+            .set({
+                basket,
+                amount:paymentIntent.amount,
+                created:paymentIntent.created
+            })
             setSucceeded(true)
             setError(null)
             setProcessing(false)
+            dispatch({
+                type:'EMPTY_BASKET'
+            })
             history.replace('/orders')
         })
     }
