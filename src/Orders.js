@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { db } from "./firebase";
 import './Orders.css'
-import { useStateValue } from "./StateProvider";
+import { useStateValue } from "./stateProvider";
 import Order from './Order'
 
 function Orders() {
